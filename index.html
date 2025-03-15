@@ -6,12 +6,16 @@
     <title>モダン掲示板</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tetris.css">
+    <link rel="stylesheet" href="css/planning.css">
 </head>
 <body>
     <div class="container">
         <header class="header">
             <h1>モダン掲示板</h1>
-            <button id="tetrisStartBtn" class="tetris-button">テトリスを始める</button>
+            <div class="header-buttons">
+                <button id="tetrisStartBtn" class="tetris-button">テトリスを始める</button>
+                <button id="planningBtn" class="planning-button">タスク計画</button>
+            </div>
         </header>
 
         <!-- テトリスモーダル -->
@@ -62,6 +66,17 @@
             </div>
         </div>
 
+        <!-- タスク計画モーダル -->
+        <div id="planningModal" class="planning-modal">
+            <div class="planning-modal-content">
+                <button class="close-button">&times;</button>
+                <h2>タスク計画</h2>
+                <div class="planning-container">
+                    <!-- planning.jsによって動的に生成される内容 -->
+                </div>
+            </div>
+        </div>
+
         <main class="main">
             <section class="post-form">
                 <h2>新規投稿</h2>
@@ -87,7 +102,9 @@
             </section>
         </main>
     </div>
-    <script src="js/main.js"></script>
+    <script type="module" src="js/calendar.js"></script>
+    <script type="module" src="js/planning.js"></script>
+    <script type="module" src="js/main.js"></script>
     <script src="js/tetris.js"></script>
 </body>
 </html>

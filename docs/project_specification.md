@@ -15,7 +15,41 @@
 - 投稿内容のXSS対策実装済み
 - データベースクリア機能あり
 
-### 2.2 テトリスゲーム機能
+### 2.2 タスク計画機能
+
+#### 2.2.1 基本仕様
+- プロジェクト単位でのタスク計画管理
+- カレンダー形式での工数入力
+- CSVエクスポート/インポート機能
+
+#### 2.2.2 UI仕様
+##### タスク一覧（縦軸）
+- タスクID
+- タスク名
+- 担当者
+- 予定工数合計
+- 実績工数合計
+
+##### カレンダー（横軸）
+- 日付表示（YYYY/MM/DD）
+- 土日祝日の色分け
+- 週単位の区切り線
+- 1日単位での工数入力セル
+
+#### 2.2.3 入力機能
+- 数値での工数入力（0.5h単位）
+- ドラッグ＆ドロップでの範囲入力
+- コピー＆ペースト機能
+
+#### 2.2.4 データ管理
+- プロジェクトの作成・編集・削除
+- タスクの追加・編集・削除
+- タスクの並び替え
+- タスクのグループ化
+- 予定と実績の差異表示
+- 週次・月次での集計表示
+
+### 2.3 テトリスゲーム機能
 
 #### 2.2.1 基本仕様
 - プレイヤー名と難易度を選択してゲーム開始
@@ -78,6 +112,42 @@ CREATE TABLE tetris_scores (
     difficulty TEXT NOT NULL,
     play_time INTEGER NOT NULL,
     played_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+```
+
+#### projects テーブル
+```sql
+CREATE TABLE projects (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+```
+
+#### tasks テーブル
+```sql
+CREATE TABLE tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    project_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    assignee TEXT,
+    estimated_hours REAL DEFAULT 0,
+    actual_hours REAL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (project_id) REFERENCES projects(id)
+)
+```
+
+#### task_schedules テーブル
+```sql
+CREATE TABLE task_schedules (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    task_id INTEGER NOT NULL,
+    date DATE NOT NULL,
+    planned_hours REAL DEFAULT 0,
+    actual_hours REAL DEFAULT 0,
+    FOREIGN KEY (task_id) REFERENCES tasks(id)
 )
 ```
 

@@ -1,0 +1,274 @@
+/* タスク計画機能のスタイル */
+.planning-container {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* プロジェクト選択 */
+.project-selector {
+    margin-bottom: 20px;
+}
+
+.project-selector select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+}
+
+/* タスク計画グリッド */
+.planning-grid {
+    display: grid;
+    grid-template-columns: 250px repeat(31, minmax(60px, 1fr));
+    gap: 1px;
+    background: #eee;
+    border: 1px solid #ddd;
+    overflow-x: auto;
+}
+
+/* ヘッダー行 */
+.grid-header {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    z-index: 1;
+}
+
+.grid-header .cell {
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+/* 休日の色分け */
+.weekend {
+    background-color: #fff0f0;
+}
+
+.holiday {
+    background-color: #ffe0e0;
+}
+
+/* タスク行 */
+.task-row {
+    display: contents;
+}
+
+.task-row .task-info {
+    background: #fff;
+    padding: 10px;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    border-right: 2px solid #ddd;
+}
+
+.task-row .cell {
+    background: #fff;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #eee;
+}
+
+/* 工数入力セル */
+.hours-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    text-align: center;
+    background: transparent;
+}
+
+.hours-input:focus {
+    outline: 2px solid #007bff;
+    background: #fff;
+}
+
+/* 選択範囲のスタイル */
+.cell.selected {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* ツールバー */
+.planning-toolbar {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.planning-toolbar button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.planning-toolbar button:hover {
+    background: #0056b3;
+}
+
+/* 合計行 */
+.total-row {
+    font-weight: bold;
+    background: #f8f9fa;
+}
+
+.total-row .cell {
+    border-top: 2px solid #ddd;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1200px) {
+    .planning-grid {
+        font-size: 14px;
+    }
+    
+    .task-row .task-info {
+        width: 200px;
+    }
+}
+
+/* CSV入出力フォーム */
+.csv-controls {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.csv-controls input[type="file"] {
+    margin-right: 10px;
+}
+
+/* モーダルウィンドウ */
+.planning-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.planning-modal.active {
+    display: block;
+}
+
+.planning-modal-content {
+    position: relative;
+    width: 95%;
+    max-width: 1200px;
+    height: 90vh;
+    margin: 2vh auto;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    overflow: auto;
+}
+
+.planning-modal .close-button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.planning-modal .close-button:hover {
+    background: #f0f0f0;
+}
+
+/* タスク編集ダイアログ */
+.task-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.dialog-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.dialog-content input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.dialog-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dialog-buttons button#saveTask {
+    background: #007bff;
+    color: white;
+}
+
+.dialog-buttons button#cancelTask {
+    background: #6c757d;
+    color: white;
+}
+
+/* ヘッダーボタン */
+.planning-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background: #28a745;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.planning-button:hover {
+    background: #218838;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
