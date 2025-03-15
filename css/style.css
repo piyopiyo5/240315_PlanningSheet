@@ -2,17 +2,105 @@ body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;
+    min-height: 100vh;
     margin: 0;
+    padding: 20px;
     background-color: #f0f0f0;
+    box-sizing: border-box;
 }
 
 .container {
     text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
 }
 
 .current-time {
-    font-size: 3em;
+    font-size: 1.5em;
     color: #333;
+    margin-bottom: 20px;
+}
+
+.calendar {
+    margin-top: 20px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header button {
+    padding: 5px 15px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.calendar-dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-date {
+    padding: 10px;
+    border: 1px solid #ddd;
+    min-height: 80px;
+    background-color: white;
+    position: relative;
+}
+
+.calendar-date.today {
+    background-color: #e3f2fd;
+}
+
+.calendar-date.other-month {
+    background-color: #f8f9fa;
+    color: #aaa;
+}
+
+.calendar-date input {
+    width: 40px;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.save-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.save-button:hover {
+    background-color: #218838;
 }

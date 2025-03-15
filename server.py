@@ -9,7 +9,7 @@ CORS(app)
 
 # データベースの初期化
 def init_db():
-    with sqlite3.connect('messages.db') as conn:
+    with sqlite3.connect('data.db') as conn:
         cursor = conn.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS messages (
@@ -29,12 +29,21 @@ def init_db():
                 played_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS calendar_data (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                date TEXT NOT NULL,
+                value INTEGER NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(date)
+            )
+        ''')
         conn.commit()
 
 # 投稿一覧を取得
 @app.route('/messages', methods=['GET'])
 def get_messages():
-    with sqlite3.connect('messages.db') as conn:
+    with sqlite3.connect('data.db') as conn:
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM messages ORDER BY created_at DESC')
         messages = cursor.fetchall()
@@ -55,7 +64,7 @@ def create_message():
     if not name or not content:
         return jsonify({'error': '名前とメッセージを入力してください'}), 400
     
-    with sqlite3.connect('messages.db') as conn:
+    with sqlite3.connect('data.db') as conn:
         cursor = conn.cursor()
         cursor.execute(
             'INSERT INTO messages (name, content) VALUES (?, ?)',
@@ -89,7 +98,7 @@ def save_tetris_score():
     if not all([player_name, score, difficulty, play_time]):
         return jsonify({'error': '必要な情報が不足しています'}), 400
     
-    with sqlite3.connect('messages.db') as conn:
+    with sqlite3.connect('data.db') as conn:
         cursor = conn.cursor()
         cursor.execute(
             'INSERT INTO tetris_scores (player_name, score, difficulty, play_time) VALUES (?, ?, ?, ?)',
@@ -103,7 +112,7 @@ def save_tetris_score():
 # データベースをクリア
 @app.route('/clear-database', methods=['POST'])
 def clear_database():
-    with sqlite3.connect('messages.db') as conn:
+    with sqlite3.connect('data.db') as conn:
         cursor = conn.cursor()
         cursor.execute('DELETE FROM messages')
         cursor.execute('DELETE FROM tetris_scores')
@@ -112,7 +121,7 @@ def clear_database():
 
 @app.route('/tetris/scores/<difficulty>', methods=['GET'])
 def get_tetris_scores(difficulty):
-    with sqlite3.connect('messages.db') as conn:
+    with sqlite3.connect('data.db') as conn:
         cursor = conn.cursor()
         cursor.execute('''
             SELECT player_name, score, play_time, played_at 
@@ -129,6 +138,37 @@ def get_tetris_scores(difficulty):
             'play_time': score[2],
             'played_at': score[3]
         } for score in scores])
+
+# カレンダーデータを保存
+@app.route('/calendar/data', methods=['POST'])
+def save_calendar_data():
+    data = request.get_json()
+    date = data.get('date')
+    value = data.get('value')
+    
+    if not date or not isinstance(value, int) or value < 0 or value > 99:
+        return jsonify({'error': '無効な入力です'}), 400
+    
+    with sqlite3.connect('data.db') as conn:
+        cursor = conn.cursor()
+        try:
+            cursor.execute(
+                'INSERT OR REPLACE INTO calendar_data (date, value) VALUES (?, ?)',
+                (date, value)
+            )
+            conn.commit()
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+
+# カレンダーデータを取得
+@app.route('/calendar/data', methods=['GET'])
+def get_calendar_data():
+    with sqlite3.connect('data.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT date, value FROM calendar_data')
+        data = cursor.fetchall()
+        return jsonify({row[0]: row[1] for row in data})
 
 if __name__ == '__main__':
     init_db()
