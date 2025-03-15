@@ -5,89 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>モダン掲示板</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/tetris.css">
 </head>
 <body>
     <div class="container">
+    <div class="container">
         <header class="header">
-            <h1>モダン掲示板</h1>
-            <button id="tetrisStartBtn" class="tetris-button">テトリスを始める</button>
+            <h1>現在時刻</h1>
         </header>
-
-        <!-- テトリスモーダル -->
-        <div id="tetrisModal" class="tetris-modal">
-            <div class="tetris-modal-content">
-                <button class="close-button">&times;</button>
-
-                <!-- セットアップ画面 -->
-                <div id="tetrisSetup" class="tetris-setup">
-                    <h2>テトリス</h2>
-                    <input type="text" id="playerNameInput" placeholder="プレイヤー名を入力" required>
-                    <div class="tetris-difficulty">
-                        <button data-difficulty="EASY" class="easy">かんたん</button>
-                        <button data-difficulty="NORMAL" class="normal">ふつう</button>
-                        <button data-difficulty="HARD" class="hard">むずかしい</button>
-                    </div>
-                    <button id="startButton" class="tetris-button">スタート</button>
-                </div>
-
-                <!-- ゲーム画面 -->
-                <div id="tetrisGame" style="display: none;">
-                    <div class="tetris-container">
-                        <div class="tetris-game-area">
-                            <canvas id="tetrisCanvas"></canvas>
-                        </div>
-                        <div class="tetris-info">
-                            <div class="tetris-next">
-                                <h3>次のピース</h3>
-                                <canvas id="nextPieceCanvas"></canvas>
-                            </div>
-                            <div class="tetris-stats">
-                                <h3>スコア: <span id="scoreDisplay">0</span></h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ランキング画面 -->
-                <div id="tetrisRanking" class="tetris-ranking" style="display: none;">
-                    <h2>ランキング</h2>
-                    <div id="rankingTabs" class="tetris-ranking-tabs">
-                        <button data-difficulty="EASY" class="active">かんたん</button>
-                        <button data-difficulty="NORMAL">ふつう</button>
-                        <button data-difficulty="HARD">むずかしい</button>
-                    </div>
-                    <table id="rankingTable" class="tetris-ranking-table"></table>
-                </div>
-            </div>
-        </div>
-
         <main class="main">
-            <section class="post-form">
-                <h2>新規投稿</h2>
-                <form id="messageForm">
-                    <div class="form-group">
-                        <input type="text" id="nameInput" placeholder="お名前" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="messageInput" placeholder="メッセージを入力してください" required></textarea>
-                    </div>
-                    <div class="button-group">
-                        <button type="submit" class="submit-btn">投稿する</button>
-                        <button type="button" id="clearDbBtn" class="clear-btn">データベースをクリア</button>
-                    </div>
-                </form>
-            </section>
-
-            <section class="messages">
-                <h2>投稿一覧</h2>
-                <div id="messageList">
-                    <!-- 投稿がここに動的に追加されます -->
-                </div>
-            </section>
+            <div id="currentTime" class="current-time"></div>
         </main>
     </div>
     <script src="js/main.js"></script>
-    <script src="js/tetris.js"></script>
 </body>
 </html>
